@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import { json } from "stream/consumers";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,16 +15,29 @@ export default function SignUp() {
   })
 
   const [pending, setPending]= useState(false)
+  const [message, setMessage] = useState("");
+  const router = useRouter();
 
   const handleSubmit= async(e: React.FormEvent) => {
     e.preventDefault();
     setPending(true)
-
+    setMessage("");
     const res= await fetch("/api/auth/signup",{
         method: "POST",
-        headers: { "Content-Type ": "application/json" },
+        headers: { "Content-Type":"application/json" },
         body: JSON.stringify(form)
     })
+    const data = await res.json();
+    if (res.ok) {
+      setMessage("Signup complete");
+      setForm({ email: "", password: "", confirmPassword: "" });
+      setTimeout(() => {
+        router.push("/signin");
+      }, 1200);
+    } else {
+      setMessage(data.message || "Signup failed");
+    }
+    setPending(false);
   }
 
   return (
@@ -165,11 +179,20 @@ export default function SignUp() {
               <button
                 type="submit"
                 disabled={pending}
-                className="mt-4 cursor-pointer w-full py-3 rounded-lg bg-gradient-to-r from-[#A259FF] to-[#4BC6EF] text-white font-semibold text-lg transition-all hover:opacity-90"
+                className="mt-4 cursor-pointer w-full py-3 rounded-lg bg-gradient-to-r from-[#A259FF] to-[#4BC6EF] text-white font-semibold text-lg transition-all hover:opacity-90 flex items-center justify-center gap-2"
               >
+                {pending && (
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                )}
                 Sign up
               </button>
             </form>
+            {message && (
+              <div className={`mt-2 text-center text-sm font-semibold ${message === 'Signup complete' ? 'text-green-400' : 'text-red-400'}`}>{message}</div>
+            )}
             <div className="flex items-center my-6">
               <div className="flex-1 h-px bg-white/20" />
               <span className="mx-4 text-white/60 text-sm">Or continue with</span>
