@@ -2,9 +2,29 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
+import { json } from "stream/consumers";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  
+  const[form, setForm]= useState({
+    email:"",
+    password:"",
+    confirmPassword:""
+  })
+
+  const [pending, setPending]= useState(false)
+
+  const handleSubmit= async(e: React.FormEvent) => {
+    e.preventDefault();
+    setPending(true)
+
+    const res= await fetch("/api/auth/signup",{
+        method: "POST",
+        headers: { "Content-Type ": "application/json" },
+        body: JSON.stringify(form)
+    })
+  }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#18102A] relative overflow-hidden">
@@ -46,7 +66,7 @@ export default function SignUp() {
         <div className="flex-1 flex flex-col justify-center items-center bg-[#1B1532]/90 p-8 md:p-16 w-full md:w-1/2">
           <div className="w-full max-w-md">
             <h1 className="text-4xl font-extrabold text-white mb-6">SIGN UP</h1>
-            <form className="flex flex-col gap-3">
+            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
               <label className="text-white text-sm font-semibold mb-1" htmlFor="email">
                 Sign up with email address
               </label>
@@ -58,6 +78,9 @@ export default function SignUp() {
                   id="email"
                   type="email"
                   placeholder="Yourname@gmail.com"
+                  value={form.email}
+                  disabled={pending}
+                  onChange={(e)=>setForm({...form,email:e.target.value})}
                   className="bg-transparent outline-none text-white w-full placeholder:text-white/60 text-sm"
                 />
               </div>
@@ -71,6 +94,9 @@ export default function SignUp() {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  value={form.password}
+                  disabled={pending}
+                  onChange={(e)=> setForm({...form,password:e.target.value})}
                   placeholder="Password"
                   className="bg-transparent outline-none text-white w-full placeholder:text-white/60 pr-8 text-sm"
                 />
@@ -108,6 +134,9 @@ export default function SignUp() {
                   id="confirm-password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Confirm Password"
+                  value={form.confirmPassword}
+                  disabled={pending}
+                  onChange={(e)=>setForm({...form, confirmPassword:e.target.value})}
                   className="bg-transparent outline-none text-white w-full placeholder:text-white/60 pr-8 text-sm"
                 />
                 <button
@@ -135,6 +164,7 @@ export default function SignUp() {
               </div>
               <button
                 type="submit"
+                disabled={pending}
                 className="mt-4 cursor-pointer w-full py-3 rounded-lg bg-gradient-to-r from-[#A259FF] to-[#4BC6EF] text-white font-semibold text-lg transition-all hover:opacity-90"
               >
                 Sign up
