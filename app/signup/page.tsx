@@ -152,7 +152,7 @@ export default function SignUp() {
               </button>
               <button className="flex cursor-pointer items-center gap-2 w-1/2 justify-center bg-[#231B3A] hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent">
                 <Image src="/github.svg" alt="GitHub" width={20} height={20} />
-                GitHub
+                Git-Hub
               </button>
             </div>
             <div className="flex gap-2 w-full relative mt-8">
