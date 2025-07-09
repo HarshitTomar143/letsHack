@@ -36,6 +36,11 @@ export default function SignIn() {
     setPending(false);
   };
 
+  const handleProvier = (event: React.MouseEvent<HTMLButtonElement>, value: "github" | "google")=>{
+    event.preventDefault();
+    signIn(value, {callbackUrl:"/"});
+  }
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#18102A] relative overflow-hidden">
       {/* Background Image */}
@@ -167,7 +172,9 @@ export default function SignIn() {
                 <Image src="/google.svg" alt="Google" width={20} height={20} />
                 Google
               </button>
-              <button className="flex items-center gap-2 w-1/2 justify-center cursor-pointer bg-[#231B3A] hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent">
+              <button
+              onClick={(e)=> handleProvier(e, "github")} 
+               className="flex items-center gap-2 w-1/2 justify-center cursor-pointer bg-[#231B3A] hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent">
                 <Image src="/github.svg" alt="GitHub" width={20} height={20} />
                 GitHub
               </button>
