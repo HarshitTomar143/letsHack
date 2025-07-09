@@ -61,18 +61,20 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-
-    async signIn({account,profile}){
-      if(account?.provider=== 'github'){
-        await connectToDatabase();
-        const existingUser = await User.findOne({email: profile?.email});
-        if(!existingUser){
+    async signIn({ user, account, profile }) {
+      await connectToDatabase();
+      if (account && account.provider !== "credentials") {
+        const existingUser = await User.findOne({ email: user.email });
+        if (!existingUser) {
           await User.create({
-            email:profile?.email
-          })
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            provider: account.provider,
+          });
         }
       }
-      return true
+      return true;
     },
 
     async jwt({ token, user }) {
