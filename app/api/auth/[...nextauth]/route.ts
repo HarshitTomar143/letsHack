@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import User from "@/model/user";
 import connectToDatabase from "@/lib/mongodb";
 import Github from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
   session: {
@@ -53,6 +54,10 @@ const handler = NextAuth({
           email: user.email,
         };
       },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   callbacks: {

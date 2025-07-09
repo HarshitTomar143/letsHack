@@ -168,7 +168,12 @@ export default function SignIn() {
               <div className="flex-1 h-px bg-white/20" />
             </div>
             <div className="flex gap-4 mb-6">
-              <button className="flex items-center gap-2 w-1/2 justify-center bg-[#231B3A] cursor-pointer hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent">
+              <button
+                type="button"
+                className="flex items-center gap-2 w-1/2 justify-center bg-[#231B3A] hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent"
+                onClick={() => signIn("google", { callbackUrl: "/home" })}
+                disabled={pending}
+              >
                 <Image src="/google.svg" alt="Google" width={20} height={20} />
                 Google
               </button>
