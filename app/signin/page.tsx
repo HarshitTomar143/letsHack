@@ -170,7 +170,7 @@ export default function SignIn() {
             <div className="flex gap-4 mb-6">
               <button
                 type="button"
-                className="flex items-center gap-2 w-1/2 justify-center bg-[#231B3A] hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent"
+                className="flex items-center gap-2 cursor-pointer w-1/2 justify-center bg-[#231B3A] hover:bg-[#2d2347] transition-colors text-white font-medium py-2.5 rounded-lg border border-transparent"
                 onClick={() => signIn("google", { callbackUrl: "/home" })}
                 disabled={pending}
               >

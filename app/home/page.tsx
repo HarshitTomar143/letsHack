@@ -26,16 +26,16 @@ export default function HomePage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
           <div className="backdrop-blur-2xl bg-white/10 border border-white/30 shadow-2xl p-14 flex flex-col items-center max-w-xl w-full rounded-3xl">
             <h2 className="text-3xl font-medium mb-8 text-center text-white/90 drop-shadow">Complete the user profile</h2>
-            <Image src="/team.png" alt="Profile" width={220} height={120} className="mb-8 rounded-xl object-contain shadow-lg" />
+            <Image src="/homePage1.png" alt="Profile" width={220} height={120} className="mb-8 rounded-xl object-contain shadow-lg" />
             <div className="flex gap-6 mt-4 w-full">
               <button
-                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-[#A259FF] to-[#4BC6EF] text-white font-semibold text-lg transition-all hover:opacity-90 shadow"
+                className="flex-1 py-3 rounded-lg bg-gradient-to-r cursor-pointer from-[#A259FF] to-[#4BC6EF] text-white font-semibold text-lg transition-all hover:opacity-90 shadow"
                 onClick={() => router.push('/profile')}
               >
                 Okay
               </button>
               <button
-                className="flex-1 py-3 rounded-lg bg-white/30 text-white font-semibold text-lg transition-all hover:bg-white/50 border border-white/40 shadow"
+                className="flex-1 py-3 rounded-lg bg-white/30 cursor-pointer text-white font-semibold text-lg transition-all hover:bg-white/50 border border-white/40 shadow"
                 onClick={() => setShowModal(false)}
               >
                 Skip
