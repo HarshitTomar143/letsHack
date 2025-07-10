@@ -13,7 +13,6 @@ import { signOut } from 'next-auth/react';
 export default function ProfilePage() {
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
       <Image
         src="/profileImg.png"
         alt="Profile Background"
@@ -21,11 +20,11 @@ export default function ProfilePage() {
         priority
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
-      {/* Overlay */}
+      
       <div className="absolute inset-0 bg-black/60 z-10" />
-      {/* Main Content */}
+      
       <div className="relative z-20 flex flex-col w-full max-w-5xl mx-auto pt-16">
-        {/* Top Bar */}
+       
         <div className="flex items-center justify-between mb-12 px-8">
           <h1 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg text-left">
             Complete Your User Profile
@@ -37,7 +36,7 @@ export default function ProfilePage() {
             Logout
           </button>
         </div>
-        {/* Form Container */}
+      
         <div className="w-full flex flex-col items-center">
           <form className="w-full max-w-3xl grid grid-cols-2 gap-x-12 gap-y-8 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-10 shadow-lg overflow-auto">
             <div>
@@ -72,7 +71,7 @@ export default function ProfilePage() {
               <label className="block text-white font-semibold mb-1">Skill 2</label>
               <SkillTwo />
             </div>
-            {/* Place file upload on the left and submit button on the right in the last row */}
+           
             <div>
               <label htmlFor="file" className="block text-white font-semibold mb-1">Upload Profile Photo</label>
               <Input id="file" type='file' className='w-full' />
