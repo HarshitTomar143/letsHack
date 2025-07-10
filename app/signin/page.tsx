@@ -23,15 +23,13 @@ export default function SignIn() {
       redirect: false,
       email: form.email,
       password: form.password,
+      callbackUrl: "/home",
     });
     if (res?.ok) {
       setMessage("Login successful");
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
+      router.push(res.url || "/home");
     } else {
       setMessage(res?.error || "Login failed");
-      // No redirect on failure
     }
     setPending(false);
   };
