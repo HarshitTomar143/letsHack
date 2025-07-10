@@ -39,17 +39,47 @@ export default function ProfilePage() {
         </div>
         {/* Form Container */}
         <div className="w-full flex flex-col items-center">
-          <form className="w-full max-w-3xl grid grid-cols-2 gap-x-12 gap-y-8 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-10 shadow-lg">
-            <Input type='email' placeholder='Official Email' className='w-full' />
-            <Input type='fullName' placeholder='Full Name' className='w-full' />
-            <Input type='rollNumber' placeholder='University Roll Number' className='w-full' />
-            <ComboboxDemo />
-            <Section />
-            <Year />
-            <SkillOne />
-            <SkillTwo />
-            <Input type='file' className='w-full' />
-            <Button variant="outline" className='w-full max-w-xs cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white' type='submit'>Submit</Button>
+          <form className="w-full max-w-3xl grid grid-cols-2 gap-x-12 gap-y-8 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-10 shadow-lg overflow-auto">
+            <div>
+              <label htmlFor="email" className="block text-white font-semibold mb-1">Email</label>
+              <Input id="email" type='email' placeholder='Official Email' className='w-full' />
+            </div>
+            <div>
+              <label htmlFor="fullName" className="block text-white font-semibold mb-1">Full Name</label>
+              <Input id="fullName" type='text' placeholder='Full Name' className='w-full' />
+            </div>
+            <div>
+              <label htmlFor="rollNumber" className="block text-white font-semibold mb-1">Roll Number</label>
+              <Input id="rollNumber" type='text' placeholder='University Roll Number' className='w-full' />
+            </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Branch</label>
+              <ComboboxDemo />
+            </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Section</label>
+              <Section />
+            </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Year</label>
+              <Year />
+            </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Skill 1</label>
+              <SkillOne />
+            </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Skill 2</label>
+              <SkillTwo />
+            </div>
+            {/* Place file upload on the left and submit button on the right in the last row */}
+            <div>
+              <label htmlFor="file" className="block text-white font-semibold mb-1">Upload Profile Photo</label>
+              <Input id="file" type='file' className='w-full' />
+            </div>
+            <div className="flex items-center mt-7 justify-center w-full">
+              <Button variant="outline" className='w-full max-w-xs cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white' type='submit'>Submit</Button>
+            </div>
           </form>
         </div>
       </div>
