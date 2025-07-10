@@ -49,7 +49,7 @@ export default function ProfilePage() {
             <SkillOne />
             <SkillTwo />
             <Input type='file' className='w-full' />
-            <Button variant="outline" className='w-full max-w-xs cursor-pointer' type='submit'>Submit</Button>
+            <Button variant="outline" className='w-full max-w-xs cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white' type='submit'>Submit</Button>
           </form>
         </div>
       </div>

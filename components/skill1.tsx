@@ -74,7 +74,7 @@ export function SkillOne() {
   const [value, setValue] = React.useState("")
 
   return (
-   <div className="m-5">
+   <div className="">
      <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
