@@ -43,7 +43,7 @@ export default function ProfilePage() {
       .upload(fileName, file);
 
     if (error) {
-      console.error("Image upload error:", error.message);
+      console.error("Image upload error!:", error.message);
       return null;
     }
 
