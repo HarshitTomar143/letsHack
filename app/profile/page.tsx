@@ -84,9 +84,9 @@ export default function ProfilePage() {
       <Image src="/profileImg.png" alt="Profile Background" fill priority className="absolute inset-0 w-full h-full object-cover z-0" />
       <div className="absolute inset-0 bg-black/60 z-10" />
 
-      <div className="relative z-20 flex flex-col w-full max-w-5xl mx-auto pt-16">
-        <div className="flex items-center justify-between mb-12 px-8">
-          <h1 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg text-left">Complete Your User Profile</h1>
+      <div className="relative z-20 flex flex-col items-center justify-center w-full max-w-5xl mx-auto">
+        <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between mb-12 px-8 w-full">
+          <h1 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg text-center md:text-left">Complete Your User Profile</h1>
           <button
             onClick={() => signOut({ redirect: true, callbackUrl: "/signin" })}
             className="cursor-pointer px-6 py-2 rounded-lg bg-gradient-to-r from-[#A259FF] to-[#4BC6EF] text-white font-semibold text-lg transition-all hover:opacity-90 shadow"
@@ -128,12 +128,12 @@ export default function ProfilePage() {
             <label className="text-white font-semibold mb-1 block">Skill 2</label>
             <SkillTwo />
           </div>
-          <div>
-            <label htmlFor="file" className="text-white font-semibold mb-1 block">Upload Profile Photo</label>
-            <Input id="file" type="file" onChange={handleFileChange} />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <Button type="submit" className="w-full max-w-xs cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white">Submit</Button>
+          <div className="flex items-end gap-4 col-span-2">
+            <div className="flex-1">
+              <label htmlFor="file" className="text-white font-semibold mb-1 block">Upload Profile Photo</label>
+              <Input id="file" type="file" onChange={handleFileChange} />
+            </div>
+            <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap">Submit</Button>
           </div>
         </form>
       </div>
