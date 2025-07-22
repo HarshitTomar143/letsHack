@@ -19,15 +19,15 @@ import {
 } from "@/components/ui/popover";
 
 const branches = [
-  { value: "it", label: "IT" },
-  { value: "cse", label: "CSE" },
-  { value: "cseAi", label: "CSE-AI" },
-  { value: "cseAiml", label: "CSE-AIML" },
-  { value: "csit", label: "CSIT" },
-  { value: "cs", label: "CS" },
-  { value: "ece", label: "ECE" },
-  { value: "mech", label: "ME" },
-  { value: "eee", label: "EEE" },
+  { value: "Information Technology", label: "IT" },
+  { value: "Computer Science Engineering", label: "CSE" },
+  { value: "CSE- Artificial Inteligence", label: "CSE-AI" },
+  { value: "CSE- AI & Machine Learning", label: "CSE-AIML" },
+  { value: "Computer Science Information Technology", label: "CSIT" },
+  { value: "Computer Science", label: "CS" },
+  { value: "Electronics & Communication Engineering", label: "ECE" },
+  { value: "Mechanical Engineering", label: "ME" },
+  { value: "Electric and Electronic Engineering", label: "EEE" },
 ];
 
 interface BranchProps {

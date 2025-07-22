@@ -20,10 +20,10 @@ import {
 } from "@/components/ui/popover";
 
 const yearOptions = [
-  { value: "first", label: "First" },
-  { value: "second", label: "Second" },
-  { value: "third", label: "Third" },
-  { value: "fourth", label: "Fourth" },
+  { value: "First", label: "First" },
+  { value: "Second", label: "Second" },
+  { value: "Third", label: "Third" },
+  { value: "Fourth", label: "Fourth" },
 ];
 
 interface YearProps {

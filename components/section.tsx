@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/popover";
 
 const sections = [
-  { value: "a", label: "A" },
-  { value: "b", label: "B" },
-  { value: "c", label: "C" },
-  { value: "d", label: "D" },
-  { value: "e", label: "E" },
+  { value: "A", label: "A" },
+  { value: "B", label: "B" },
+  { value: "C", label: "C" },
+  { value: "D", label: "D" },
+  { value: "E", label: "E" },
 ];
 
 export function Section({

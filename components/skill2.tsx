@@ -20,17 +20,18 @@ import {
 } from "@/components/ui/popover";
 
 const skills = [
-  { value: "web", label: "Web Development" },
-  { value: "app", label: "App Development" },
-  { value: "web3", label: "Web 3" },
-  { value: "arvr", label: "AR/VR" },
-  { value: "ai", label: "AI" },
-  { value: "ml", label: "Machine Learning" },
-  { value: "cyber", label: "Cyber Security" },
-  { value: "devops", label: "DEV-OPS" },
-  { value: "quant", label: "Quant Analytic" },
-  { value: "uiux", label: "UI/UX" },
-  { value: "animator", label: "Animator" },
+  { value: "Web Development", label: "Web Development" },
+  { value: "App Development", label: "App Development" },
+  { value: "Web 3", label: "Web 3" },
+  { value: "AR/VR", label: "AR/VR" },
+  { value: "AI", label: "AI" },
+  { value: "Machine Learning", label: "Machine Learning" },
+  { value: "Cyber Security", label: "Cyber Security" },
+  { value: "DEV-OPS", label: "DEV-OPS" },
+  { value: "Quant Analytic", label: "Quant Analytic" },
+  { value: "UI/UX", label: "UI/UX" },
+  { value: "Animator", label: "Animator" },
+  { value: "None", label: "None"},
 ];
 
 export function SkillTwo({

@@ -28,11 +28,11 @@ export default function HomePage() {
         {/* Boxes Grid */}
         <div className="grid grid-cols-2 grid-rows-2 gap-x-16 gap-y-12 mt-4 mx-auto">
           {/* Box 1 */}
-          <Link href="/team" className="group">
+          <Link href="/profile" className="group">
             <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl w-[320px] h-[220px] flex flex-col items-center justify-center shadow-lg p-6 transition-all duration-300 cursor-pointer group-hover:scale-105 group-hover:bg-white/20 group-hover:backdrop-blur-3xl group-hover:border-white/40">
-              <h3 className="text-white text-2xl font-bold mb-3">Teamwork</h3>
-              <Image src="/team.png" alt="Teamwork" width={80} height={80} className="rounded-xl mb-3 object-contain" />
-              <span className="text-white text-center text-base">Collaborate with your team to build amazing projects.</span>
+              <h3 className="text-white text-2xl font-bold mb-3">Profile</h3>
+              <Image src="/body.png" alt="Teamwork" width={80} height={80} className="rounded-xl mb-3 object-contain" />
+              <span className="text-white text-center text-base">Add or Enhance your profile.</span>
             </div>
           </Link>
           {/* Box 2 */}

@@ -155,7 +155,7 @@ export default function ProfilePage() {
               Home
             </button>
             <button
-              onClick={() => router.push('/')}
+              onClick={() => router.push('/user')}
               className="cursor-pointer px-6 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-pink-500 text-white font-semibold text-lg transition-all hover:opacity-90 shadow"
             >
               View Profile
