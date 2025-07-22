@@ -48,7 +48,7 @@ export function ComboboxDemo({ value, onChange }: BranchProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-80 justify-between"
+          className="w-100 justify-between"
         >
           {selectedLabel}
           <ChevronsUpDown className="h-4 w-4 opacity-50" />

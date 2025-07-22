@@ -23,6 +23,10 @@ export default function ProfilePage() {
     skill1: "",
     skill2: "",
     file: null as File | null,
+    contact: "",
+    linkedin: "",
+    github: "",
+    bestWork: "",
   });
 
   const [error, setError] = useState("");
@@ -107,6 +111,10 @@ export default function ProfilePage() {
       skill1: "",
       skill2: "",
       file: null,
+      contact: "",
+      linkedin: "",
+      github: "",
+      bestWork: "",
     });
     // Optionally, reset file input value if needed
   };
@@ -121,6 +129,10 @@ export default function ProfilePage() {
       form.year.trim() !== "" &&
       form.skill1.trim() !== "" &&
       form.skill2.trim() !== "" &&
+      form.linkedin.trim() !== "" &&
+      form.github.trim() !== "" &&
+      form.contact.trim() !== "" &&
+      form.bestWork.trim() !== "" &&
       form.file !== null
     );
   };
@@ -169,61 +181,83 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-3xl grid grid-cols-2 gap-x-12 gap-y-8 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-10 shadow-lg overflow-auto">
-          <div>
-            <label htmlFor="email" className="text-white font-semibold mb-1 block">Email</label>
-            <Input id="email" type="email" placeholder="Official Email" value={form.email} onChange={handleChange} />
-          </div>
-          <div>
-            <label htmlFor="fullName" className="text-white font-semibold mb-1 block">Full Name</label>
-            <Input id="fullName" type="text" placeholder="Full Name" value={form.fullName} onChange={handleChange} />
-          </div>
-          <div>
-            <label htmlFor="rollNumber" className="text-white font-semibold mb-1 block">Roll Number</label>
-            <Input id="rollNumber" type="text" placeholder="University Roll Number" value={form.rollNumber} onChange={handleChange} />
-          </div>
-          <div>
-            <label className="text-white font-semibold mb-1 block">Branch</label>
-            <ComboboxDemo
-               value={form.branch}
-                onChange={(val) => setForm((prev) => ({ ...prev, branch: val }))}
-            />
-          </div>
-          <div>
-            <label className="text-white font-semibold mb-1 block">Section</label>
-            <Section
-             value={form.section}
-                 onChange={(val) => setForm((prev) => ({ ...prev, section: val }))}
-            />
-          </div>
-          <div>
-            <label className="text-white font-semibold mb-1 block">Year</label>
-           <Year
-              value={form.year}
-              onChange={(val) => setForm((prev) => ({ ...prev, year: val }))}
-            />
-
-          </div>
-          <div>
-            <label className="text-white font-semibold mb-1 block">Skill 1</label>
-            <SkillOne value={form.skill1}
-              onChange={(val) => setForm((prev) => ({ ...prev, skill1: val }))} />
-          </div>
-          <div>
-            <label className="text-white font-semibold mb-1 block">Skill 2</label>
-            <SkillTwo 
-               value={form.skill2}
-                onChange={(val) => setForm((prev) => ({ ...prev, skill2: val }))}
-            />
-          </div>
-          <div className="flex items-end gap-4 col-span-2">
-            <div className="flex-1">
-              <label htmlFor="file" className="text-white font-semibold mb-1 block">Upload Profile Photo</label>
-              <Input id="file" type="file" onChange={handleFileChange} />
+        <form onSubmit={handleSubmit} className="w-full max-w-5xl flex flex-col gap-8 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-10 shadow-lg overflow-auto">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Personal Information */}
+            <div className="flex-1 bg-white/20 backdrop-blur-xl rounded-xl p-6 mb-2 shadow border border-white/20 min-w-[260px]">
+              <h2 className="text-xl font-bold text-white mb-4">Personal Information</h2>
+              <div className="grid grid-cols-1 gap-y-6">
+                <div>
+                  <label htmlFor="email" className="text-white font-semibold mb-1 block">Email</label>
+                  <Input id="email" type="email" placeholder="Official Email" value={form.email} onChange={handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="fullName" className="text-white font-semibold mb-1 block">Full Name</label>
+                  <Input id="fullName" type="text" placeholder="Full Name" value={form.fullName} onChange={handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="rollNumber" className="text-white font-semibold mb-1 block">Roll Number</label>
+                  <Input id="rollNumber" type="text" placeholder="University Roll Number" value={form.rollNumber} onChange={handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="contact" className="text-white font-semibold mb-1 block">Contact Details</label>
+                  <Input id="contact" type="text" placeholder="Contact Details" value={form.contact} onChange={handleChange} />
+                </div>
+              </div>
             </div>
-            <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={!isFormComplete()}>
-              Submit
-            </Button>
+            {/* Academic Information */}
+            <div className="flex-1 bg-white/20 backdrop-blur-xl rounded-xl p-6 mb-2 shadow border border-white/20 min-w-[220px]">
+              <h2 className="text-xl font-bold text-white mb-4">Academic Information</h2>
+              <div className="grid grid-cols-1 gap-y-6">
+                <div>
+                  <label className="text-white font-semibold mb-1 block">Branch</label>
+                  <ComboboxDemo value={form.branch} onChange={(val) => setForm((prev) => ({ ...prev, branch: val }))} />
+                </div>
+                <div>
+                  <label className="text-white font-semibold mb-1 block">Section</label>
+                  <Section value={form.section} onChange={(val) => setForm((prev) => ({ ...prev, section: val }))} />
+                </div>
+                <div>
+                  <label className="text-white font-semibold mb-1 block">Year</label>
+                  <Year value={form.year} onChange={(val) => setForm((prev) => ({ ...prev, year: val }))} />
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Professional & Social */}
+          <div className="bg-white/20 backdrop-blur-xl rounded-xl p-6 mb-2 shadow border border-white/20 min-w-[260px]">
+            <h2 className="text-xl font-bold text-white mb-4">Professional & Social</h2>
+            <div className="grid grid-cols-1 gap-y-6">
+              <div>
+                <label className="text-white font-semibold mb-1 block">Skill 1</label>
+                <SkillOne value={form.skill1} onChange={(val) => setForm((prev) => ({ ...prev, skill1: val }))} />
+              </div>
+              <div>
+                <label className="text-white font-semibold mb-1 block">Skill 2</label>
+                <SkillTwo value={form.skill2} onChange={(val) => setForm((prev) => ({ ...prev, skill2: val }))} />
+              </div>
+              <div>
+                <label htmlFor="linkedin" className="text-white font-semibold mb-1 block">Linkedin URL</label>
+                <Input className='w-130' id="linkedin" type="text" placeholder="Linkedin URL" value={form.linkedin} onChange={handleChange} />
+              </div>
+              <div>
+                <label htmlFor="github" className="text-white font-semibold mb-1 block">GitHub URL</label>
+                <Input id="github" type="text" placeholder="GitHub URL" value={form.github} onChange={handleChange} />
+              </div>
+              <div className="md:col-span-2">
+                <label htmlFor="bestWork" className="text-white font-semibold mb-1 block">Best Work URL</label>
+                <Input id="bestWork" type="text" placeholder="Best Work URL" value={form.bestWork} onChange={handleChange} />
+              </div>
+              <div className="md:col-span-2 flex items-end gap-4">
+                <div className="flex-1">
+                  <label htmlFor="file" className="text-white font-semibold mb-1 block">Upload Profile Photo</label>
+                  <Input id="file" type="file" onChange={handleFileChange} />
+                </div>
+                <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={!isFormComplete()}>
+                  Submit
+                </Button>
+              </div>
+            </div>
           </div>
         </form>
       </div>

@@ -52,7 +52,7 @@ export function SkillOne({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-80 justify-between"
+          className="w-130 justify-between"
         >
           {selectedLabel}
           <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />

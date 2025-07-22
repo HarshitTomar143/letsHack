@@ -11,6 +11,10 @@ export async function POST(req: NextRequest) {
     branch,
     section,
     year,
+    linkedin,
+    github,
+    contact,
+    bestWork,
     skill1,
     skill2,
     image_url, // ✅ ADD this
@@ -55,6 +59,10 @@ export async function POST(req: NextRequest) {
           section,
           year,
           skill1,
+          linkedin,
+          github,
+          contact,
+          bestWork,
           skill2,
           image_url, // ✅ Store image URL
         },
