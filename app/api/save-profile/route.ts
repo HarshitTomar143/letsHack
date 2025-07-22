@@ -20,6 +20,25 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Check if email already exists
+    const { data: emailData, error: emailError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('email', email)
+      .single();
+    if (emailData) {
+      return NextResponse.json({ error: 'A user with this email already exists.' }, { status: 409 });
+    }
+    // Check if roll number already exists
+    const { data: rollData, error: rollError } = await supabase
+      .from('profiles')
+      .select('roll_number')
+      .eq('roll_number', rollNumber)
+      .single();
+    if (rollData) {
+      return NextResponse.json({ error: 'A user with this roll number already exists.' }, { status: 409 });
+    }
+
     const { error } = await supabase
       .from('profiles')
       .upsert(
