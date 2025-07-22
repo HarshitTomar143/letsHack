@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
     year,
     skill1,
     skill2,
+    image_url, // ✅ ADD this
   } = body;
 
   if (!email) {
@@ -21,24 +22,28 @@ export async function POST(req: NextRequest) {
 
   try {
     // Check if email already exists
-    const { data: emailData, error: emailError } = await supabase
+    const { data: emailData } = await supabase
       .from('profiles')
       .select('email')
       .eq('email', email)
       .single();
+
     if (emailData) {
       return NextResponse.json({ error: 'A user with this email already exists.' }, { status: 409 });
     }
+
     // Check if roll number already exists
-    const { data: rollData, error: rollError } = await supabase
+    const { data: rollData } = await supabase
       .from('profiles')
       .select('roll_number')
       .eq('roll_number', rollNumber)
       .single();
+
     if (rollData) {
       return NextResponse.json({ error: 'A user with this roll number already exists.' }, { status: 409 });
     }
 
+    // ✅ Insert including image
     const { error } = await supabase
       .from('profiles')
       .upsert(
@@ -51,6 +56,7 @@ export async function POST(req: NextRequest) {
           year,
           skill1,
           skill2,
+          image_url, // ✅ Store image URL
         },
         { onConflict: 'email' }
       );

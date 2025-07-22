@@ -81,7 +81,7 @@ export default function ProfilePage() {
     const payload = {
       ...form,
       file: undefined, // remove file object
-      imageUrl,
+      image_url: imageUrl,
     };
 
     const res = await fetch("/api/save-profile", {

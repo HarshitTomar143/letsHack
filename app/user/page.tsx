@@ -47,9 +47,9 @@ export default function ViewProfilePage() {
           <p><strong>Skill 2:</strong> {profile.skill2}</p>
         </div>
         <div className="w-full h-64 relative rounded overflow-hidden border border-white/20">
-          {profile.imageUrl && (
+          {profile.image_url && (
             <Image
-              src={profile.imageUrl}
+              src={profile.image_url}
               alt="Profile"
               fill
               className="object-cover"
