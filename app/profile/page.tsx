@@ -110,23 +110,37 @@ export default function ProfilePage() {
           </div>
           <div>
             <label className="text-white font-semibold mb-1 block">Branch</label>
-            <ComboboxDemo />
+            <ComboboxDemo
+               value={form.branch}
+                onChange={(val) => setForm((prev) => ({ ...prev, branch: val }))}
+            />
           </div>
           <div>
             <label className="text-white font-semibold mb-1 block">Section</label>
-            <Section />
+            <Section
+             value={form.section}
+                 onChange={(val) => setForm((prev) => ({ ...prev, section: val }))}
+            />
           </div>
           <div>
             <label className="text-white font-semibold mb-1 block">Year</label>
-            <Year />
+           <Year
+              value={form.year}
+              onChange={(val) => setForm((prev) => ({ ...prev, year: val }))}
+            />
+
           </div>
           <div>
             <label className="text-white font-semibold mb-1 block">Skill 1</label>
-            <SkillOne />
+            <SkillOne value={form.skill1}
+              onChange={(val) => setForm((prev) => ({ ...prev, skill1: val }))} />
           </div>
           <div>
             <label className="text-white font-semibold mb-1 block">Skill 2</label>
-            <SkillTwo />
+            <SkillTwo 
+               value={form.skill2}
+                onChange={(val) => setForm((prev) => ({ ...prev, skill2: val }))}
+            />
           </div>
           <div className="flex items-end gap-4 col-span-2">
             <div className="flex-1">

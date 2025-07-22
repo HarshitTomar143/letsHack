@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown, Divide } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,43 +12,30 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "first",
-    label: "First",
-  },
-  {
-    value: "second",
-    label: "Second",
-  },
-  {
-    value: "third",
-    label: "Third",
-  },
-  {
-    value: "fourth",
-    label: "Fourth",
-  },
+const yearOptions = [
+  { value: "first", label: "First" },
+  { value: "second", label: "Second" },
+  { value: "third", label: "Third" },
+  { value: "fourth", label: "Fourth" },
+];
 
-  
-  
+interface YearProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
-]
-
-export function Year() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+export function Year({ value, onChange }: YearProps) {
+  const [open, setOpen] = React.useState(false);
 
   return (
-   <div className="">
-     <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -57,31 +44,31 @@ export function Year() {
           className="w-80 justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+            ? yearOptions.find((opt) => opt.value === value)?.label
             : "Select Year"}
-          <ChevronsUpDown className="opacity-50" />
+          <ChevronsUpDown className="opacity-50 h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." className="h-9" />
+          <CommandInput placeholder="Search year..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No year found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {yearOptions.map((option) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                  key={option.value}
+                  value={option.value}
+                  onSelect={() => {
+                    onChange(option.value);
+                    setOpen(false);
                   }}
                 >
-                  {framework.label}
+                  {option.label}
                   <Check
                     className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      "ml-auto h-4 w-4",
+                      value === option.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -91,7 +78,5 @@ export function Year() {
         </Command>
       </PopoverContent>
     </Popover>
-   </div>
-    
-  )
+  );
 }

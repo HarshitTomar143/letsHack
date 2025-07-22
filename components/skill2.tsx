@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown, Divide } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,71 +12,41 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "web",
-    label: "Web Development",
-  },
-  {
-    value: "app",
-    label: "App Development",
-  },
-  {
-    value: "web3",
-    label: "Web 3",
-  },
-  {
-    value: "arvr",
-    label: "AR/VR",
-  },
-  {
-    value: "ai",
-    label: "AI",
-  },
-   {
-    value: "ml",
-    label: "Machine Learning",
-  },
-   {
-    value: "cyber",
-    label: "Cyber Security",
-  },
-   {
-    value: "devops",
-    label: "DEV-OPS",
-  },
-   {
-    value: "quant",
-    label: "Quant Analytic",
-  },
-   {
-    value: "uiux",
-    label: "UI/UX",
-  },
-   {
-    value: "animator",
-    label: "Animator",
-  },
-   {
-    value: "none",
-    label: "None",
-  },
-]
+const skills = [
+  { value: "web", label: "Web Development" },
+  { value: "app", label: "App Development" },
+  { value: "web3", label: "Web 3" },
+  { value: "arvr", label: "AR/VR" },
+  { value: "ai", label: "AI" },
+  { value: "ml", label: "Machine Learning" },
+  { value: "cyber", label: "Cyber Security" },
+  { value: "devops", label: "DEV-OPS" },
+  { value: "quant", label: "Quant Analytic" },
+  { value: "uiux", label: "UI/UX" },
+  { value: "animator", label: "Animator" },
+];
 
-export function SkillTwo() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+export function SkillTwo({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = React.useState(false);
+
+  const selectedLabel =
+    skills.find((skill) => skill.value === value)?.label ?? "Select Second Skill";
 
   return (
-   <div className="">
-     <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -84,32 +54,30 @@ export function SkillTwo() {
           aria-expanded={open}
           className="w-80 justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select Second Skill"}
-          <ChevronsUpDown className="opacity-50" />
+          {selectedLabel}
+          <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-80 p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." className="h-9" />
+          <CommandInput placeholder="Search skill..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No skill found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {skills.map((skill) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={skill.value}
+                  value={skill.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                    onChange(currentValue);
+                    setOpen(false);
                   }}
                 >
-                  {framework.label}
+                  {skill.label}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === skill.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -119,7 +87,5 @@ export function SkillTwo() {
         </Command>
       </PopoverContent>
     </Popover>
-   </div>
-    
-  )
+  );
 }

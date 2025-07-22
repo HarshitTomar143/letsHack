@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,62 +11,38 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "it",
-    label: "IT",
-  },
-  {
-    value: "cse",
-    label: "CSE",
-  },
-  {
-    value: "cseAi",
-    label: "CSE-AI",
-  },
-  {
-    value: "cseAiml",
-    label: "CSE-AIML",
-  },
-  {
-    value: "csit",
-    label: "CSIT",
-  },
-  {
-    value: "cs",
-    label: "CS",
-  },
-  {
-    value: "ece",
-    label: "ECE",
-  },
-  {
-    value: "mech",
-    label: "ME",
-  },
-  {
-    value: "eee",
-    label: "EEE",
-  },
-  
-  
+const branches = [
+  { value: "it", label: "IT" },
+  { value: "cse", label: "CSE" },
+  { value: "cseAi", label: "CSE-AI" },
+  { value: "cseAiml", label: "CSE-AIML" },
+  { value: "csit", label: "CSIT" },
+  { value: "cs", label: "CS" },
+  { value: "ece", label: "ECE" },
+  { value: "mech", label: "ME" },
+  { value: "eee", label: "EEE" },
+];
 
-]
+interface BranchProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
-export function ComboboxDemo() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+export function ComboboxDemo({ value, onChange }: BranchProps) {
+  const [open, setOpen] = React.useState(false);
+
+  const selectedLabel =
+    branches.find((branch) => branch.value === value)?.label || "Select Branch";
 
   return (
-    <div className="">
-      <Popover open={open} onOpenChange={setOpen} >
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -75,32 +50,30 @@ export function ComboboxDemo() {
           aria-expanded={open}
           className="w-80 justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select Branch"}
-          <ChevronsUpDown className="opacity-50" />
+          {selectedLabel}
+          <ChevronsUpDown className="h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-80 p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." className="h-9" />
+          <CommandInput placeholder="Search branch..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No branch found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {branches.map((branch) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
+                  key={branch.value}
+                  value={branch.value}
+                  onSelect={() => {
+                    onChange(branch.value);
+                    setOpen(false);
                   }}
                 >
-                  {framework.label}
+                  {branch.label}
                   <Check
                     className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      "ml-auto h-4 w-4",
+                      value === branch.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -110,6 +83,5 @@ export function ComboboxDemo() {
         </Command>
       </PopoverContent>
     </Popover>
-    </div>
-  )
+  );
 }
