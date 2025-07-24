@@ -3,14 +3,30 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { supabase } from "@/lib/supabaseServer";
+import { useRouter } from "next/navigation";
+import { Pencil } from "lucide-react";
 
-export default function ViewProfilePage() {
+type Props= {
+  params: {email:string};
+}
+
+export default function ViewProfilePage({params}:Props) {
+  const email= decodeURIComponent(params.email);
+  const [user,setUser]= useState<any>(null)  
   const { data: session } = useSession();
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  const isOwnProfile= session?.user?.email === email;
+
   useEffect(() => {
     const fetchProfile = async () => {
+
+      
+
+      
+
       if (!session?.user?.email) return;
 
       try {
