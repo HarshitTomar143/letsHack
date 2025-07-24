@@ -5,11 +5,8 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import globeIcon from '../../../public/globe.svg';
 
-type Props = {
-  params: { email: string };
-};
 
-export default async function UserProfile({ params }: Props) {
+export default async function UserProfile({ params }: { params: { email: string } }) {
   const decodedEmail = decodeURIComponent(params.email); // to handle @ and . safely
 
   const { data: user, error } = await supabase
