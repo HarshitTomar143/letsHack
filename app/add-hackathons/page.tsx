@@ -16,6 +16,7 @@ export default function AddHackathonPage() {
     type: '',
     prize: '',
     image: null as File | null,
+    link: '',
   });
   const [message, setMessage] = useState('');
   const router = useRouter();
@@ -56,6 +57,7 @@ export default function AddHackathonPage() {
     formData.append('type', form.type);
     formData.append('prize', form.prize);
     if (form.image) formData.append('image', form.image);
+    formData.append('link',form.link);
 
     const res = await fetch('/api/add-hackathon', {
       method: 'POST',
@@ -76,6 +78,7 @@ export default function AddHackathonPage() {
         type: '',
         prize: '',
         image: null,
+        link: '',
       });
       setCountdown(5);
       setShowSuccessPopup(true);
@@ -84,6 +87,18 @@ export default function AddHackathonPage() {
       const timer = setTimeout(() => setShowSuccessPopup(false), 5000);
       setSuccessTimer(timer);
     }
+  };
+
+  const isFormComplete = () => {
+    return (
+      form.name.trim() !== '' &&
+      form.location.trim() !== '' &&
+      form.date.trim() !== '' &&
+      form.type.trim() !== '' &&
+      form.prize.trim() !== '' &&
+      form.link.trim() !== '' &&
+      form.image !== null
+    );
   };
 
   useEffect(() => {
@@ -146,7 +161,7 @@ export default function AddHackathonPage() {
               {message && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>}
             </form>
           ) : (
-            <form onSubmit={handleFormSubmit} className="space-y-6">
+            <form onSubmit={handleFormSubmit} className="space-y-3">
               <h2 className="text-2xl font-bold text-white mb-4">Add Hackathon</h2>
               <div>
                 <label htmlFor="name" className="text-white font-semibold mb-1 block">Hackathon Name</label>
@@ -169,11 +184,15 @@ export default function AddHackathonPage() {
                 <Input id="prize" value={form.prize} onChange={handleInputChange} placeholder="Prize (optional)" />
               </div>
               <div>
+                <label htmlFor="link" className="text-white font-semibold mb-1 block">Link</label>
+                <Input id="link" value={form.link} onChange={handleInputChange} placeholder="Official Link" />
+              </div>
+              <div>
                 <label htmlFor="image" className="text-white font-semibold mb-1 block">Upload Banner Image</label>
                 <Input id="image" type="file" onChange={handleFileChange} accept="image/*" required />
               </div>
               <div className="flex gap-4">
-                <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={isUploading}>
+                <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={isUploading || !isFormComplete()}>
                   {isUploading ? 'Uploading...' : 'Add Hackathon'}
                 </Button>
                 <Button type="button" onClick={() => router.push('/home')} className="h-10 px-8 cursor-pointer bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold whitespace-nowrap">Home</Button>

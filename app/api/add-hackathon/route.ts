@@ -10,9 +10,10 @@ export async function POST(req:NextRequest){
     const type= formData.get('type') as string;
     const prize= formData.get('prize') as string;
     const image= formData.get('image') as File| null
+    const link= formData.get('link') as string
 
 
-    if(!name || !location || !date || !type || !prize || !image){
+    if(!name || !location || !date || !type || !prize || !image || !link){
         return NextResponse.json({error: 'Missing required fields.'}, {status: 400});
     }
 
@@ -37,7 +38,7 @@ export async function POST(req:NextRequest){
         image_url= publicUrlData?.publicUrl || null;
     }
 
-    const {error: insertError}= await supabase.from('hackathons').insert([{name,location, date, type, prize, image_url}]);
+    const {error: insertError}= await supabase.from('hackathons').insert([{name,location, date, type, prize, image_url, link}]);
 
     if(insertError){
         return NextResponse.json({error: insertError.message}, {status: 500})
