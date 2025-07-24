@@ -145,6 +145,9 @@ export default function AddHackathonPage() {
           </div>
         )}
         <div className="w-full max-w-2xl flex flex-col gap-8 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-10 shadow-lg overflow-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg text-center mb-8">
+            Add <span className="bg-gradient-to-r from-[#A259FF] to-[#4BC6EF] bg-clip-text text-transparent">Hackathon</span>
+          </h1>
           {!authorized ? (
             <form onSubmit={handlePasskeySubmit} className="space-y-6">
               <h2 className="text-2xl font-bold text-white mb-4">Enter Passkey</h2>
@@ -161,43 +164,48 @@ export default function AddHackathonPage() {
               {message && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">{message}</div>}
             </form>
           ) : (
-            <form onSubmit={handleFormSubmit} className="space-y-3">
-              <h2 className="text-2xl font-bold text-white mb-4">Add Hackathon</h2>
-              <div>
-                <label htmlFor="name" className="text-white font-semibold mb-1 block">Hackathon Name</label>
-                <Input id="name" value={form.name} onChange={handleInputChange} placeholder="Hackathon Name" required />
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <label htmlFor="name" className="text-white font-semibold mb-1 block">Hackathon Name</label>
+                    <Input id="name" value={form.name} onChange={handleInputChange} placeholder="Hackathon Name" required />
+                  </div>
+                  <div>
+                    <label htmlFor="location" className="text-white font-semibold mb-1 block">Location</label>
+                    <Input id="location" value={form.location} onChange={handleInputChange} placeholder="Location" required />
+                  </div>
+                  <div>
+                    <label htmlFor="date" className="text-white font-semibold mb-1 block">Date</label>
+                    <Input id="date" type="date" value={form.date} onChange={handleInputChange} required />
+                  </div>
+                  <div>
+                    <label htmlFor="type" className="text-white font-semibold mb-1 block">Type (Online/Offline)</label>
+                    <Input id="type" value={form.type} onChange={handleInputChange} placeholder="Type (Online/Offline)" required />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <label htmlFor="prize" className="text-white font-semibold mb-1 block">Prize</label>
+                    <Input id="prize" value={form.prize} onChange={handleInputChange} placeholder="Prize (optional)" />
+                  </div>
+                  <div>
+                    <label htmlFor="link" className="text-white font-semibold mb-1 block">Link</label>
+                    <Input id="link" value={form.link} onChange={handleInputChange} placeholder="Official Link" />
+                  </div>
+                  <div>
+                    <label htmlFor="image" className="text-white font-semibold mb-1 block">Upload Banner Image</label>
+                    <Input id="image" type="file" onChange={handleFileChange} accept="image/*" required />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label htmlFor="location" className="text-white font-semibold mb-1 block">Location</label>
-                <Input id="location" value={form.location} onChange={handleInputChange} placeholder="Location" required />
-              </div>
-              <div>
-                <label htmlFor="date" className="text-white font-semibold mb-1 block">Date</label>
-                <Input id="date" type="date" value={form.date} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label htmlFor="type" className="text-white font-semibold mb-1 block">Type (Online/Offline)</label>
-                <Input id="type" value={form.type} onChange={handleInputChange} placeholder="Type (Online/Offline)" required />
-              </div>
-              <div>
-                <label htmlFor="prize" className="text-white font-semibold mb-1 block">Prize (optional)</label>
-                <Input id="prize" value={form.prize} onChange={handleInputChange} placeholder="Prize (optional)" />
-              </div>
-              <div>
-                <label htmlFor="link" className="text-white font-semibold mb-1 block">Link</label>
-                <Input id="link" value={form.link} onChange={handleInputChange} placeholder="Official Link" />
-              </div>
-              <div>
-                <label htmlFor="image" className="text-white font-semibold mb-1 block">Upload Banner Image</label>
-                <Input id="image" type="file" onChange={handleFileChange} accept="image/*" required />
-              </div>
-              <div className="flex gap-4">
+              <hr className="border-white/20 my-2" />
+              <div className="flex gap-4 justify-end">
                 <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={isUploading || !isFormComplete()}>
                   {isUploading ? 'Uploading...' : 'Add Hackathon'}
                 </Button>
                 <Button type="button" onClick={() => router.push('/home')} className="h-10 px-8 cursor-pointer bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold whitespace-nowrap">Home</Button>
               </div>
-              {message && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">{message}</div>}
             </form>
           )}
         </div>
