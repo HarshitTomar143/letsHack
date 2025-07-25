@@ -6,16 +6,12 @@ import Image from 'next/image';
 import globeIcon from '../../../public/globe.svg';
 
 // Accept both Promise and non-Promise for params for compatibility
-export default async function UserProfile({ params }: { params: { email: string } } | { params: Promise<{ email: string }> }) {
-  // Support both Next.js 15 (Promise) and earlier (object)
-  let email: string;
-  if (params instanceof Promise) {
-    const resolved = await params;
-    email = resolved.email;
-  } else {
-    email = params.email;
-  }
-  const decodedEmail = decodeURIComponent(email); // to handle @ and . safely
+export default async function UserProfile({
+  params,
+}: {
+  params: { email: string };
+}) {
+  const decodedEmail = decodeURIComponent(params.email);
 
   const { data: user, error } = await supabase
     .from('profiles')
@@ -24,10 +20,6 @@ export default async function UserProfile({ params }: { params: { email: string 
     .single();
 
   if (!user || error) return notFound();
-
-  console.log('Decoded Email:', decodedEmail);
-  console.log('Supabase User:', user);
-  console.log('Supabase Error:', error);
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
