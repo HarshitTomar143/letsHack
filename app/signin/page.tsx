@@ -218,3 +218,7 @@ export default function SignIn() {
     </div>
   );
 }
+
+export async function generateStaticParams() {
+  return [];
+}
