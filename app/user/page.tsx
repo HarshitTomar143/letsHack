@@ -3,32 +3,17 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { supabase } from "@/lib/supabaseServer";
 import { useRouter } from "next/navigation";
-import { Pencil } from "lucide-react";
 
-type Props= {
-  params: {email:string};
-}
-
-export default function ViewProfilePage({params}:Props) {
-  const email= decodeURIComponent(params.email);
-  const [user,setUser]= useState<any>(null)  
-  const { data: session } = useSession();
+export default function UserProfilePage() {
+  const { data: session, status } = useSession();
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
-  const isOwnProfile= session?.user?.email === email;
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProfile = async () => {
-
-      
-
-      
-
       if (!session?.user?.email) return;
-
       try {
         const res = await fetch(`/api/get-profile?email=${session.user.email}`);
         const data = await res.json();
@@ -39,12 +24,14 @@ export default function ViewProfilePage({params}:Props) {
         setLoading(false);
       }
     };
-
-    fetchProfile();
-  }, [session?.user?.email]);
+    if (status === "authenticated") {
+      fetchProfile();
+    } else if (status === "unauthenticated") {
+      router.push("/signin");
+    }
+  }, [session?.user?.email, status, router]);
 
   if (loading) return <div className="text-white p-10">Loading...</div>;
-
   if (!profile)
     return <div className="text-white p-10">No profile data found.</div>;
 
