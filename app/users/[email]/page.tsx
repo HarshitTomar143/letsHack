@@ -5,9 +5,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import globeIcon from '../../../public/globe.svg';
 
-
-export default async function UserProfile({ params }: { params: { email: string } }) {
-  const decodedEmail = decodeURIComponent(params.email); // to handle @ and . safely
+export default async function UserProfile({ params }: { params: Promise<{ email: string }> }) {
+  const { email } = await params;
+  const decodedEmail = decodeURIComponent(email); // to handle @ and . safely
 
   const { data: user, error } = await supabase
     .from('profiles')
@@ -20,7 +20,6 @@ export default async function UserProfile({ params }: { params: { email: string 
   console.log('Decoded Email:', decodedEmail);
   console.log('Supabase User:', user);
   console.log('Supabase Error:', error);
-
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
