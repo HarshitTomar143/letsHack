@@ -26,7 +26,13 @@ export default function SignIn() {
     });
     if (res?.ok) {
       setMessage("Login successful");
-      router.push(res.url || "/home");
+      // Convert absolute URL to relative path if needed
+      let url = res.url || "/home";
+      try {
+        const parsed = new URL(url, window.location.origin);
+        url = parsed.pathname + parsed.search + parsed.hash;
+      } catch {}
+      router.push(url);
     } else {
       setMessage(res?.error || "Login failed");
     }
