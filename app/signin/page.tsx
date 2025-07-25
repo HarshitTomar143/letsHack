@@ -219,6 +219,3 @@ export default function SignIn() {
   );
 }
 
-export async function generateStaticParams() {
-  return [];
-}
