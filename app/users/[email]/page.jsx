@@ -4,13 +4,9 @@ import { supabase } from '@/lib/supabaseServer';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
-type PageProps = {
-  params: {
-    email: string;
-  };
-};
 
-export default async function UserProfile({ params }: PageProps) {
+
+export default async function UserProfile({ params }) {
   const decodedEmail = decodeURIComponent(params.email);
 
   const { data: user, error } = await supabase
