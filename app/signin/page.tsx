@@ -13,9 +13,7 @@ export default function SignIn() {
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const error = searchParams.get("error");
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setPending(true);
@@ -151,13 +149,13 @@ export default function SignIn() {
                 Login
               </button>
             </form>
-            {error && (
+            {/* {error && (
               <div className="mt-2 text-center text-sm font-semibold text-red-400">
                 {error === "CredentialsSignin"
                   ? "Invalid email or password"
                   : "Login failed"}
               </div>
-            )}
+            )} */}
             {message && (
               <div className={`mt-2 text-center text-sm font-semibold ${message === 'Login successful' ? 'text-green-400' : 'text-red-400'}`}>{message}</div>
             )}
