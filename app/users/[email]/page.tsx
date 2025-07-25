@@ -5,8 +5,16 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import globeIcon from '../../../public/globe.svg';
 
-export default async function UserProfile({ params }: { params: Promise<{ email: string }> }) {
-  const { email } = await params;
+// Accept both Promise and non-Promise for params for compatibility
+export default async function UserProfile({ params }: { params: { email: string } } | { params: Promise<{ email: string }> }) {
+  // Support both Next.js 15 (Promise) and earlier (object)
+  let email: string;
+  if (params instanceof Promise) {
+    const resolved = await params;
+    email = resolved.email;
+  } else {
+    email = params.email;
+  }
   const decodedEmail = decodeURIComponent(email); // to handle @ and . safely
 
   const { data: user, error } = await supabase
