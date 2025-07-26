@@ -89,6 +89,8 @@ const handler = NextAuth({
         session.user = {
           email: token.email,
           image: null, // You can replace this with a real image field if needed
+          id: token.id as string, // ✅ Add this line
+          name: token.name || null,
         };
       }
       return session;

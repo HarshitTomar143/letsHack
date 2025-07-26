@@ -77,34 +77,43 @@ export default function HackathonsPage() {
           {hackathons.map((hack) => (
             <div
               key={hack.id}
-              className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all"
+              className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all hover:scale-105 cursor-pointer group"
             >
-              {hack.image_url && (
-                <Image
-                  src={hack.image_url}
-                  alt={hack.name}
-                  width={500}
-                  height={300}
-                  className="object-cover w-full h-48"
-                />
-              )}
-              <div className="p-6 text-white space-y-2">
-                <h2 className="text-2xl font-bold">{hack.name}</h2>
-                <p><span className="font-semibold">Location:</span> {hack.location}</p>
-                <p><span className="font-semibold">Date:</span> {hack.date}</p>
-                <p><span className="font-semibold">Type:</span> {hack.type}</p>
-                <p><span className="font-semibold">Prize:</span> {hack.prize || 'N/A'}</p>
-                {hack.link && (
+              <Link href={`/hackathons/${hack.id}`} className="block">
+                {hack.image_url && (
+                  <Image
+                    src={hack.image_url}
+                    alt={hack.name}
+                    width={500}
+                    height={300}
+                    className="object-cover w-full h-48 group-hover:scale-105 transition-transform duration-300"
+                  />
+                )}
+                <div className="p-6 text-white space-y-2">
+                  <h2 className="text-2xl font-bold group-hover:text-purple-300 transition-colors">{hack.name}</h2>
+                  <p><span className="font-semibold">Location:</span> {hack.location}</p>
+                  <p><span className="font-semibold">Date:</span> {hack.date}</p>
+                  <p><span className="font-semibold">Type:</span> {hack.type}</p>
+                  <p><span className="font-semibold">Prize:</span> {hack.prize || 'N/A'}</p>
+                  <div className="flex items-center justify-between mt-4">
+                    <span className="text-purple-300 font-medium group-hover:text-purple-200 transition-colors">
+                      View Details →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+              {hack.link && (
+                <div className="px-6 pb-6">
                   <a
                     href={hack.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block mt-2 text-blue-400 hover:underline font-medium"
+                    className="text-blue-400 hover:underline font-medium inline-flex items-center gap-1"
                   >
                     Visit Site →
                   </a>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
