@@ -7,6 +7,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+
+
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
@@ -43,6 +47,11 @@ export default function SignIn() {
     event.preventDefault();
     signIn(value, {callbackUrl:"/"});
   }
+
+  const { status } = useSession();
+useEffect(() => {
+  if (status === "authenticated") router.replace("/home");
+}, [status]);
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#18102A] relative overflow-hidden">

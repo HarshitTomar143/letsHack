@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { json } from "stream/consumers";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +42,11 @@ export default function SignUp() {
     }
     setPending(false);
   }
+
+  const { status } = useSession();
+    useEffect(() => {
+      if (status === "authenticated") router.replace("/home");
+    }, [status]);
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#18102A] relative overflow-hidden">
