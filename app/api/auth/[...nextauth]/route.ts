@@ -1,24 +1,21 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import Github from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import User from "@/model/user";
 import connectToDatabase from "@/lib/mongodb";
-import Github from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 
-const handler = NextAuth({
+// ✅ Exported configuration
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
   providers: [
-
     Github({
-      clientId:process.env.GITHUB_CLIENT_ID! as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET! as string
-      
+      clientId: process.env.GITHUB_CLIENT_ID! as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET! as string,
     }),
-
-
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -26,29 +23,22 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("Credentials received:", credentials);
         if (!credentials?.email || !credentials?.password) {
-          console.log("Missing email or password");
           throw new Error("Missing email or password");
         }
 
         await connectToDatabase();
 
         const user = await User.findOne({ email: credentials.email }).lean();
-        console.log("User found:", user);
-
         if (!user || typeof user.password !== "string") {
-          console.log("Invalid email or password");
           throw new Error("Invalid email or password");
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password);
-        console.log("Password valid:", isValid);
         if (!isValid) {
           throw new Error("Invalid email or password");
         }
 
-        // Return a serializable object
         return {
           id: user._id.toString(),
           email: user.email,
@@ -61,7 +51,7 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       await connectToDatabase();
       if (account && account.provider !== "credentials") {
         const existingUser = await User.findOne({ email: user.email });
@@ -76,7 +66,6 @@ const handler = NextAuth({
       }
       return true;
     },
-
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -87,23 +76,25 @@ const handler = NextAuth({
     async session({ session, token }) {
       if (token) {
         session.user = {
+          id: token.id as string,
           email: token.email,
-          image: null, // You can replace this with a real image field if needed
-          id: token.id as string, // ✅ Add this line
+          image: null,
           name: token.name || null,
         };
       }
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return baseUrl + "/home";
     },
   },
   pages: {
-    signIn: "/signin", // ✅ fixed typo
-    error: "/signin", // Redirect errors to the signin page
+    signIn: "/signin",
+    error: "/signin",
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
+// ✅ Export handler
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

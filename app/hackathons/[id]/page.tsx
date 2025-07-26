@@ -138,69 +138,26 @@ export default function HackathonDetailPage() {
           <div className="p-8 text-white">
             <h1 className="text-4xl font-bold mb-4">{hackathon.name}</h1>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Basic Information */}
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-purple-300">Event Details</h2>
-                <div className="space-y-3">
-                  <div className="flex items-center">
-                    <span className="font-semibold w-32">Location:</span>
-                    <span>{hackathon.location}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-semibold w-32">Date:</span>
-                    <span>{hackathon.date}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-semibold w-32">Type:</span>
-                    <span className="bg-purple-500/20 px-3 py-1 rounded-full text-sm">
-                      {hackathon.type}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-semibold w-32">Prize Pool:</span>
-                    <span className="text-green-400 font-semibold">{hackathon.prize || 'TBD'}</span>
-                  </div>
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold text-purple-300">Event Details</h2>
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <span className="font-semibold w-32">Location:</span>
+                  <span>{hackathon.location}</span>
                 </div>
-              </div>
-
-              {/* Additional Information */}
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold text-purple-300">Additional Info</h2>
-                <div className="space-y-3">
-                  {hackathon.organizer && (
-                    <div className="flex items-center">
-                      <span className="font-semibold w-32">Organizer:</span>
-                      <span>{hackathon.organizer}</span>
-                    </div>
-                  )}
-                  {hackathon.registration_deadline && (
-                    <div className="flex items-center">
-                      <span className="font-semibold w-32">Registration:</span>
-                      <span>{hackathon.registration_deadline}</span>
-                    </div>
-                  )}
-                  {hackathon.max_participants && (
-                    <div className="flex items-center">
-                      <span className="font-semibold w-32">Max Participants:</span>
-                      <span>{hackathon.max_participants}</span>
-                    </div>
-                  )}
-                  {hackathon.technologies && hackathon.technologies.length > 0 && (
-                    <div className="flex items-start">
-                      <span className="font-semibold w-32">Technologies:</span>
-                      <div className="flex flex-wrap gap-2">
-                        {hackathon.technologies.map((tech, index) => (
-                          <span
-                            key={index}
-                            className="bg-blue-500/20 px-3 py-1 rounded-full text-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                <div className="flex items-center">
+                  <span className="font-semibold w-32">Date:</span>
+                  <span>{hackathon.date}</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="font-semibold w-32">Type:</span>
+                  <span className="bg-purple-500/20 px-3 py-1 rounded-full text-sm">
+                    {hackathon.type}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <span className="font-semibold w-32">Prize Pool:</span>
+                  <span className="text-green-400 font-semibold">{hackathon.prize || 'TBD'}</span>
                 </div>
               </div>
             </div>
