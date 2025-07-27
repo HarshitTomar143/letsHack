@@ -44,9 +44,9 @@ export default function HomePage() {
             </div>
           </Link>
           {/* Box 3 */}
-          <Link href="/resources" className="group">
+          <Link href="/requests" className="group">
             <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl w-[320px] h-[220px] flex flex-col items-center justify-center shadow-lg p-6 transition-all duration-300 cursor-pointer group-hover:scale-105 group-hover:bg-white/20 group-hover:backdrop-blur-3xl group-hover:border-white/40">
-              <h3 className="text-white text-2xl font-bold mb-3">Resources</h3>
+              <h3 className="text-white text-2xl font-bold mb-3">Requests</h3>
               <Image src="/file.svg" alt="Resources" width={80} height={80} className="rounded-xl mb-3 object-contain" />
               <span className="text-white text-center text-base">Access guides, templates, and learning materials.</span>
             </div>
