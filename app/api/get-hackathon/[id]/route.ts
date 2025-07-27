@@ -1,35 +1,22 @@
 import { supabase } from "@/lib/supabaseServer";
-import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const { data, error } = await supabase
-      .from('hackathons')
-      .select('*')
-      .eq('id', params.id)
-      .single();
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const id = url.pathname.split("/").pop(); // get last segment of URL
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return NextResponse.json(
-          { error: 'Hackathon not found' },
-          { status: 404 }
-        );
-      }
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({ hackathon: data });
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+  if (!id) {
+    return new Response("Missing hackathon ID", { status: 400 });
   }
-} 
+
+  const { data, error } = await supabase
+    .from("hackathons")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    return new Response(error.message, { status: 500 });
+  }
+
+  return new Response(JSON.stringify(data), { status: 200 });
+}
