@@ -79,7 +79,7 @@ export default function HackathonsPage() {
               key={hack.id}
               className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all hover:scale-105 cursor-pointer group"
             >
-              <Link href={`/hackathons/${hack.id}`} className="block">
+              <Link href={`/hackathons/${hack.id}`} className="block" onClick={() => console.log('Navigating to hackathon:', hack.id)}>
                 {hack.image_url && (
                   <Image
                     src={hack.image_url}

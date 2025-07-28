@@ -1,53 +1,44 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-interface Hackathon {
-  id: number;
-  name: string;
-  location: string;
-  date: string;
-  type: string;
-  prize: string;
-  image_url: string;
-  link: string;
-  description?: string;
-  organizer?: string;
-  registration_deadline?: string;
-  max_participants?: number;
-  technologies?: string[];
-}
 
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-}
 
 export default function HackathonDetailPage() {
   const params = useParams();
   const { data: session } = useSession();
-  const [hackathon, setHackathon] = useState<Hackathon | null>(null);
+  const [hackathon, setHackathon] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const [showUsers, setShowUsers] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
-  const [sendingId, setSendingId] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [users, setUsers] = useState([]);
+  const [sendingId, setSendingId] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
+
+  // Debug logging - JSX file
+  console.log('HackathonDetailPage rendered with params:', params);
 
   // Fetch hackathon details
   useEffect(() => {
     const fetchHackathon = async () => {
       try {
+        console.log('Fetching hackathon with ID:', params.id);
         const res = await fetch(`/api/get-hackathon/${params.id}`);
+        console.log('Response status:', res.status);
         const data = await res.json();
-        if (res.ok) setHackathon(data.hackathon);
-        else setError(data.error || 'Failed to fetch hackathon details');
-      } catch {
+        console.log('Response data:', data);
+        if (res.ok) {
+          setHackathon(data.hackathon);
+        } else {
+          console.error('API Error:', data.error);
+          setError(data.error || 'Failed to fetch hackathon details');
+        }
+      } catch (err) {
+        console.error('Fetch Error:', err);
         setError('Failed to fetch hackathon details');
       } finally {
         setLoading(false);
@@ -65,7 +56,7 @@ export default function HackathonDetailPage() {
     else setError('Failed to fetch users');
   };
 
-  const sendRequest = async (receiverEmail: string) => {
+  const sendRequest = async (receiverEmail) => {
   const res = await fetch("/api/requests", {
     method: "POST",
     body: JSON.stringify({
@@ -83,8 +74,17 @@ export default function HackathonDetailPage() {
 
 
   if (loading) return <div className="text-white text-center py-12">Loading...</div>;
-  if (error || !hackathon)
-    return <div className="text-white text-center py-12">Error: {error}</div>;
+  if (error || !hackathon) {
+    console.error('Render Error:', { error, hackathon, params });
+    return (
+      <div className="text-white text-center py-12">
+        <div>Error: {error}</div>
+        <div className="mt-4 text-sm text-gray-300">
+          Hackathon ID: {params.id}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
