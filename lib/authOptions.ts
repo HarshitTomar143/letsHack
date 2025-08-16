@@ -92,5 +92,5 @@ export const authOptions: NextAuthOptions = {
     signIn: "/signin",
     error: "/signin",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET!,
 };

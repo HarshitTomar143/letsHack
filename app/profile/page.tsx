@@ -31,10 +31,12 @@ export default function ProfilePage() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState("");
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => setSuccess("") , 5000);
+      const timer = setTimeout(() => setSuccess("") , 3000);
       return () => clearTimeout(timer);
     }
   }, [success]);
@@ -50,73 +52,96 @@ export default function ProfilePage() {
   };
 
   const uploadImage = async (file: File): Promise<string | null> => {
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Date.now()}.${fileExt}`;
+    try {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Date.now()}.${fileExt}`;
 
-    const { data, error } = await supabase.storage
-      .from("profile-images")
-      .upload(fileName, file);
+      const { data, error } = await supabase.storage
+        .from("profile-images")
+        .upload(fileName, file);
 
-    if (error) {
-      console.error("Image upload error!:", error.message);
+      if (error) {
+        console.error("Image upload error!:", error.message);
+        return null;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("profile-images")
+        .getPublicUrl(fileName);
+
+      return urlData?.publicUrl ?? null;
+    } catch (err) {
+      console.error("Image upload failed:", err);
       return null;
     }
-
-    const { data: urlData } = supabase.storage
-      .from("profile-images")
-      .getPublicUrl(fileName);
-
-    return urlData?.publicUrl ?? null;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setIsSubmitting(true);
 
-    
+    try {
+      let imageUrl = "";
+      if (form.file) {
+        setUploadStatus("Uploading profile image...");
+        const url = await uploadImage(form.file);
+        if (url) {
+          imageUrl = url;
+          setUploadStatus("Saving profile information...");
+        } else {
+          setError("Failed to upload profile image. Please try again.");
+          return;
+        }
+      } else {
+        setUploadStatus("Saving profile information...");
+      }
 
-    let imageUrl = "";
-    if (form.file) {
-      const url = await uploadImage(form.file);
-      if (url) imageUrl = url;
+      const payload = {
+        ...form,
+        file: undefined, // remove file object
+        image_url: imageUrl,
+      };
+
+      const res = await fetch("/api/save-profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+      if (!res.ok && result.error) {
+        setError(result.error);
+        return;
+      }
+      
+      setError("");
+      setSuccess(result.message || "Profile updated successfully!");
+      
+      // Reset form after successful submission
+      setForm({
+        email: "",
+        fullName: "",
+        rollNumber: "",
+        branch: "",
+        section: "",
+        year: "",
+        skill1: "",
+        skill2: "",
+        file: null,
+        contact: "",
+        linkedin: "",
+        github: "",
+        bestWork: "",
+      });
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+      console.error("Submit error:", err);
+    } finally {
+      setIsSubmitting(false);
+      setUploadStatus("");
     }
-
-    const payload = {
-      ...form,
-      file: undefined, // remove file object
-      image_url: imageUrl,
-    };
-
-    const res = await fetch("/api/save-profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await res.json();
-    if (!res.ok && result.error) {
-      setError(result.error);
-      return;
-    }
-    setError("");
-    setSuccess(result.message || "Profile saved successfully!");
-    setForm({
-      email: "",
-      fullName: "",
-      rollNumber: "",
-      branch: "",
-      section: "",
-      year: "",
-      skill1: "",
-      skill2: "",
-      file: null,
-      contact: "",
-      linkedin: "",
-      github: "",
-      bestWork: "",
-    });
-    // Optionally, reset file input value if needed
   };
 
   const isFormComplete = () => {
@@ -150,9 +175,29 @@ export default function ProfilePage() {
             {error}
           </div>
         )}
+        {isSubmitting && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="bg-white/95 backdrop-blur-xl border border-blue-300 rounded-2xl shadow-2xl p-8 max-w-md mx-4 text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Updating Profile...</h3>
+              <p className="text-blue-600 font-medium">{uploadStatus || "Please wait while we save your information"}</p>
+            </div>
+          </div>
+        )}
+        
         {success && (
-          <div className="mb-4 w-full max-w-3xl bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
-            {success}
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="bg-white/95 backdrop-blur-xl border border-green-300 rounded-2xl shadow-2xl p-8 max-w-md mx-4 text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Success!</h3>
+              <p className="text-green-600 font-medium">{success}</p>
+            </div>
           </div>
         )}
         <div className="flex flex-col md:flex-row items-center md:items-center md:justify-between mb-12 px-8 w-full max-w-7xl">
@@ -253,8 +298,15 @@ export default function ProfilePage() {
                   <label htmlFor="file" className="text-white font-semibold mb-1 block">Upload Profile Photo</label>
                   <Input id="file" type="file" onChange={handleFileChange} />
                 </div>
-                <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={!isFormComplete()}>
-                  Submit
+                <Button type="submit" className="h-10 px-8 cursor-pointer bg-violet-500 hover:bg-purple-600 text-white hover:text-white whitespace-nowrap" disabled={!isFormComplete() || isSubmitting}>
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Updating...
+                    </div>
+                  ) : (
+                    'Submit Profile'
+                  )}
                 </Button>
               </div>
             </div>
